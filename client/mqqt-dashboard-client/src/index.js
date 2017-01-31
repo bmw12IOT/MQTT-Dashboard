@@ -8,14 +8,16 @@ import 'react-resizable/css/styles.css';
 
 import  './index.css';
 
-import Layout from "./components/layout/Layout";
+import Layout from './components/layout/Layout';
 
 
-import NotFound from "./pages/NotFound";
+import NotFound from './pages/NotFound';
 
-import Home from "./pages/Home";
-import DnDTest from "./pages/DnDTest"
+import Home from './pages/Home';
+import DnDTest from './pages/DnDTest';
 
+import WebsocketConnection from './WebsocketConnection';
+WebsocketConnection.start();
 
 ReactDOM.render(
   <MuiThemeProvider>
