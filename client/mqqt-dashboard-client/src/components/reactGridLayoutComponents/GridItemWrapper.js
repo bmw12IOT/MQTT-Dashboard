@@ -5,10 +5,10 @@ import React from 'react';
  *  it is used as a Wrapper of the items in a ResponsiveReactGridLayout component
  *  It gives the with of the grid Items to the Childcomponent.
  *
- *  data-grid example = {x: 1, y: 0, w: 3, h: 2, minW: 2, maxW: 4}
  *
  *  @props key type string: Is the name of the element in the ReactGrid,
  *    data-grid type object: says where is schould be placed on the grid
+ *      example = {x: 1, y: 0, w: 3, h: 2, minW: 2, maxW: 4}
  *  @Children type reactComponent: the Component thath should be shown in the grid
  *  @Children.props width: type string: width of the Griditem,
  *    height type string: height of the Griditem
