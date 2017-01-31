@@ -5,31 +5,35 @@ import Router from 'react-router';
 var websocketURL = "ws://localhost:61910/";
 var websocketProtocol = "echo-protocol";
 
+var client;
+
 
 
 class HandleDataAction {
   constructor() {
 
-    this.client = new w3cwebsocket(websocketURL, websocketProtocol);
-    this.start = function() {
 
-    }
-    this.client.onerror = function() {
+  }
+
+  start() {
+    client = new w3cwebsocket(websocketURL, websocketProtocol);
+
+    client.onerror = function() {
         console.log('Connection Error');
     };
 
-    this.client.onopen = function() {
+    client.onopen = function() {
         console.log('WebSocket Client Connected');
     };
 
-    this.client.onclose = function() {
+    client.onclose = function() {
         console.log('echo-protocol Client Closed');
         setTimeout(function() {
-           
-        }, 1000);
+          handleDataAction.start();
+        }, 5000);
     };
 
-    this.client.onmessage = function(e) {
+    client.onmessage = function(e) {
       if (typeof e.data === 'string') {
         var data = JSON.parse(e.data);
         console.log(data);
@@ -43,9 +47,8 @@ class HandleDataAction {
     };
   }
 
-
   waitForConnection (callback, interval) {
-      if (this.client.readyState === 1) {
+      if (client.readyState === 1) {
           callback();
       } else {
           var that = this;
@@ -58,7 +61,7 @@ class HandleDataAction {
 
   send (message, callback) {
     this.waitForConnection(function () {
-        this.client.send(message);
+        client.send(message);
         callback();
     }, 1000);
   };
