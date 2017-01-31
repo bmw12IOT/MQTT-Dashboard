@@ -8,13 +8,18 @@ var websocketProtocol = "echo-protocol";
 var client;
 
 
-
+/*
+ *  just one instance of this class can be created
+ *  The conection will start when the start() method gets called
+ *
+ */
 class HandleDataAction {
-  constructor() {
 
-
-  }
-
+/*
+ *  When called overides the client variable with a new conneciton.
+ *  When the connection closes it automaticli calles itself.
+ *
+ */
   start() {
     client = new w3cwebsocket(websocketURL, websocketProtocol);
 
