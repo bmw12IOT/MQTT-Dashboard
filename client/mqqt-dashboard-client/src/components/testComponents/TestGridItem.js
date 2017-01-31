@@ -1,6 +1,6 @@
 import React from 'react';
 
-var TetsGridItem = React.createClass({
+var TestGridItem = React.createClass({
   render() {
     return (
       <div>
@@ -10,4 +10,4 @@ var TetsGridItem = React.createClass({
   }
 });
 
-module.exports = TetsGridItem;
+module.exports = TestGridItem;
