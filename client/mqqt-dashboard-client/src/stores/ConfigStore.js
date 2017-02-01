@@ -1,12 +1,20 @@
 import { EventEmitter } from "events";
 
-import dispatcher from "../dispatcher";
-import setCookie from "../util/setCookie"
+import Dispatcher from "../Dispatcher";
 
 class ConfigStore extends EventEmitter {
   constructor() {
     super()
-    this.colors = {};
+    this.colors = {
+      primaryColorDark: "#303F9F",
+      primaryColor: "#3F51B5",
+      primaryColorLight:  "#C5CAE9",
+      primaryColorText:   "#FFFFFF",
+      accentColor:         "#FF4081",
+      primaryTextColor:   "#212121",
+      secondaryTextColor: "#757575",
+      dividerColor:        "#BDBDBD",
+    };
   }
 
   handleActions(action) {
@@ -22,6 +30,6 @@ class ConfigStore extends EventEmitter {
 }
 
 const configStore = new ConfigStore();
-dispatcher.register(configStore.handleActions.bind(configStore));
+Dispatcher.register(configStore.handleActions.bind(configStore));
 
 export default configStore;

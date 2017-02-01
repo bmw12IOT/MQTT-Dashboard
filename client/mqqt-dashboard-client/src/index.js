@@ -8,7 +8,8 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
 
-import  './index.css';
+import './styles/grid.css';
+import './index.css';
 
 import Layout from './components/layout/Layout';
 
@@ -16,6 +17,7 @@ import Layout from './components/layout/Layout';
 import NotFound from './pages/NotFound';
 
 import Dashboard from './pages/Dashboard';
+import Login from './pages/Login';
 import DnDTest from './pages/DnDTest';
 
 import WebsocketConnection from './WebsocketConnection';
@@ -30,6 +32,7 @@ ReactDOM.render(
       <Route path="/" component={Layout} >
         <IndexRoute component={Dashboard} />
         <Route path="/dashboard" component={Dashboard} />
+        <Route path="/login" component={Login} />
         <Route path="/dndtest" component={DnDTest} />
       </Route>
       <Route path="*" component={NotFound}/>
