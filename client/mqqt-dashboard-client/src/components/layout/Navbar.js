@@ -32,10 +32,11 @@ var Navbar = React.createClass({
     return (
       <div>
         <AppBar
-          title="FoodMood"
+          title="MQTT-Dashboard"
           style={navbartStyle}
           zDepth={2}
-          iconElementRight={this.state.logedIn ? <LoggedInNavbarSettings username={this.state.username}/> : <LoggedOutNavbarSettings />}
+          showMenuIconButton={false}
+          iconElementRight={this.state.logedIn ? <LoggedInNavbarSettings /> : <LoggedOutNavbarSettings />}
         />
         <div style={placeholderStyle}></div>
       </div>

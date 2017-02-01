@@ -5,7 +5,7 @@ import MenuItem from 'material-ui/MenuItem';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 
 
-var LoggedInNavbarSettings = React.createClass({
+var LoggedOutNavbarSettings = React.createClass({
   render() {
     return (
       <IconMenu
@@ -22,4 +22,4 @@ var LoggedInNavbarSettings = React.createClass({
   }
 });
 
-module.exports = LoggedInNavbarSettings;
+module.exports = LoggedOutNavbarSettings;
