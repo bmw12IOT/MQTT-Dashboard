@@ -17,7 +17,7 @@ import Layout from './components/layout/Layout';
 import NotFound from './pages/NotFound';
 
 import Dashboard from './pages/Dashboard';
-import Login from './pages/Login';
+import UserAuthentication from './pages/UserAuthentication';
 import DnDTest from './pages/DnDTest';
 
 import WebsocketConnection from './WebsocketConnection';
@@ -32,9 +32,9 @@ ReactDOM.render(
       <Route path="/" component={Layout} >
         <IndexRoute component={Dashboard} />
         <Route path="/dashboard" component={Dashboard} />
-        <Route path="/login" component={Login} />
         <Route path="/dndtest" component={DnDTest} />
       </Route>
+      <Route path="/userauthentication(/:method)" component={UserAuthentication} />
       <Route path="*" component={NotFound}/>
     </Router>
   </MuiThemeProvider>,
