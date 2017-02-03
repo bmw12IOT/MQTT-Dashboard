@@ -8,7 +8,15 @@ var Login = React.createClass({
 
   render() {
     return (
+      <div>
       <h1>login</h1>
+      <p>login</p>
+      <br/>
+      <p>login</p>
+      <br/>
+      <p>login</p>
+      <br/>
+      </div>
     );
   }
 });

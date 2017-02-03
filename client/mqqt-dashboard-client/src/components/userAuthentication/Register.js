@@ -9,7 +9,21 @@ var Register = React.createClass({
 
   render() {
     return (
-      <h1>register</h1>
+      <div>
+      <h1>Register</h1>
+      <p>Register</p>
+      <br/>
+      <p>Register</p>
+      <br/>
+      <p>Register</p>
+      <br/>
+      <p>Register</p>
+      <br/>
+      <p>Register</p>
+      <br/>
+      <p>Register</p>
+      <br/>
+      </div>
     );
   }
 });
