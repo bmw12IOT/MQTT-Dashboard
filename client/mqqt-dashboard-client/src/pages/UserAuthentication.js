@@ -80,11 +80,13 @@ var UserAuthentication = React.createClass({
         transformUp: false,
         transformDown: true,
         AuthenticationMethodWrapperOpen: true,
+        AuthenticationMethodWrapperHight: -1,
       });
       setTimeout(() => {
         this.setState({
           transformUp: false,
           transformDown: false,
+
         });
       }, 1000);
     }, 1000);
@@ -98,6 +100,7 @@ var UserAuthentication = React.createClass({
             <h1 style={styles.userAuthenticationTitleStyle}>{(this.state.authenticationMethod === "register") ? "Register" : "Login"}</h1>
             <FloatingActionButton
               secondary={true}
+              zDepth={2}
               style={
                 Object.assign(
                   styles.userAuthenticationChangeLoginRegisterButtonStyle,
@@ -123,7 +126,16 @@ var UserAuthentication = React.createClass({
           ref="AuthenticationMethodWrapper"
           style={{
             overflow: "hidden",
-            "max-height": (this.state.AuthenticationMethodWrapperOpen) ? (this.state.AuthenticationMethodWrapperHight != -1) ? this.state.AuthenticationMethodWrapperHight + "px" : "" : "0px",
+            "max-height":
+              (this.state.AuthenticationMethodWrapperOpen)
+                ?
+                (this.state.AuthenticationMethodWrapperHight != -1)
+                  ?
+                  this.state.AuthenticationMethodWrapperHight + "px"
+                    :
+                  ""
+                :
+                  "0px",
             transition: "max-height 1s",
           }}
         >
