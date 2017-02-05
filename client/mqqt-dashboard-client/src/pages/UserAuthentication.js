@@ -18,11 +18,25 @@ import ConfigStore from '../stores/ConfigStore';
 var UserAuthentication = React.createClass({
   getInitialState: function() {
     return {
-      authenticationMethod: "login",
+      authenticationMethod: "",
+
       transformUp: false,
       transformDown: false,
       AuthenticationMethodWrapperOpen: true,
-      AuthenticationMethodWrapperHight: -1,
+
+      AuthenticationMethodWrapperTransitionSpeed: 1,
+
+      authenticationShowMethodRegister: false,
+      authenticationShowMethodLogin: false,
+
+      authenticationHideLoginMethode: false,
+      authenticationHideRegisterMethode: false,
+
+      authenticationUpLoginMethode: false,
+      authenticationUpRegisterMethode: false,
+
+      AuthenticationLoginMethodWrapperHight: -1,
+      AuthenticationRegisterMethodWrapperHight: -1,
     };
   },
 
@@ -31,30 +45,60 @@ var UserAuthentication = React.createClass({
   },
 
   componentDidMount: function() {
-    let { clientHeight } = this.refs.AuthenticationMethodWrapper;
-    this.setState({
-      AuthenticationMethodWrapperHight: clientHeight,
-    });
+    this.getHightOfMethodWrapper();
   },
 
   componentDidUpdate: function(prevProps, prevState) {
-    if (prevProps != this.props) {
-      if (typeof this.props.routeParams !== "undefined") {
-        this.updateURL();
-      }
+    if (prevProps.params.method !== this.props.params.method) {
+      this.updateURL();
     }
+  },
+
+  getHightOfMethodWrapper() {
+    var AuthenticationLoginMethodWrapperHight = -1;
+    var AuthenticationRegisterMethodWrapperHight = -1;
+
+    if ('loginMethod' in this.refs) {
+      AuthenticationLoginMethodWrapperHight = this.refs.loginMethod.clientHeight;
+    }
+    if ('registerMethod' in this.refs) {
+      AuthenticationRegisterMethodWrapperHight = this.refs.registerMethod.clientHeight;
+    }
+
+    this.setState({
+      AuthenticationRegisterMethodWrapperHight: AuthenticationRegisterMethodWrapperHight,
+      AuthenticationLoginMethodWrapperHight: AuthenticationLoginMethodWrapperHight,
+    });
+    return {
+      AuthenticationLoginMethodWrapperHight: AuthenticationLoginMethodWrapperHight,
+      AuthenticationRegisterMethodWrapperHight: AuthenticationRegisterMethodWrapperHight
+    };
   },
 
   updateURL() {
     if (typeof this.props.params.method !== "undefined") {
       if (this.props.params.method == "register") {
-        this.setState({
-          authenticationMethod: "register",
-        });
+        if (this.state.authenticationMethod !== "register") {
+          this.setState({
+            authenticationShowMethodRegister: true,
+            authenticationShowMethodLogin: false,
+
+            authenticationHideLoginMethode: false,
+            authenticationHideRegisterMethode: false,
+            authenticationMethod: "register",
+          });
+        }
       } else if(this.props.params.method == "login") {
-        this.setState({
-          authenticationMethod: "login",
-        });
+        if (this.state.authenticationMethod !== "login") {
+          this.setState({
+            authenticationShowMethodRegister: false,
+            authenticationShowMethodLogin: true,
+
+            authenticationHideLoginMethode: false,
+            authenticationHideRegisterMethode: false,
+            authenticationMethod: "login",
+          });
+        }
       } else {
         hashHistory.push('/userauthentication/login');
       }
@@ -64,40 +108,135 @@ var UserAuthentication = React.createClass({
   },
 
   chageAuthenticationMethod() {
-    console.log("change");
-    this.setState({
-      transformUp: true,
-      transformDown: false,
-      AuthenticationMethodWrapperOpen: false,
-    });
-    setTimeout(() => {
-      if (this.state.authenticationMethod === "login") {
-        hashHistory.push('/userauthentication/register');
-      } else {
-        hashHistory.push('/userauthentication/login');
-      }
+    if (this.state.authenticationMethod === "register") {
       this.setState({
-        transformUp: false,
-        transformDown: true,
-        AuthenticationMethodWrapperOpen: true,
-        AuthenticationMethodWrapperHight: -1,
-      });
-      setTimeout(() => {
-        this.setState({
-          transformUp: false,
-          transformDown: false,
+        transformUp: true,
+        transformDown: false,
 
-        });
-      }, 1000);
-    }, 1000);
+        authenticationUpRegisterMethode: true,
+        AuthenticationMethodWrapperTransitionSpeed: 1,
+        authenticationShowMethodLogin: true,
+        authenticationHideLoginMethode: true,
+      },() => {
+        var methodeHeights = this.getHightOfMethodWrapper();
+        setTimeout(() => {
+          this.setState({
+            transformUp: false,
+            transformDown: true,
+
+            AuthenticationMethodWrapperTransitionSpeed: 0,
+            authenticationHideLoginMethode: false,
+            authenticationShowMethodRegister: false,
+            authenticationUpLoginMethode: true,
+            authenticationMethod: "login"
+
+          },() => {
+            setTimeout(() => {
+              hashHistory.push('/userauthentication/login');
+              this.setState({
+                AuthenticationMethodWrapperTransitionSpeed: 1,
+                authenticationUpRegisterMethode: false,
+                authenticationUpLoginMethode: false,
+              },() => {
+                setTimeout(() => {
+
+                  this.setState({
+                    transformUp: false,
+                    transformDown: false,
+
+                    AuthenticationMethodWrapperTransitionSpeed: 1,
+                    authenticationUpRegisterMethode: false,
+                    authenticationUpLoginMethode: false,
+                  });
+                }, 1000);
+              });
+            }, 10);
+          });
+        }, 1000);
+      }
+    );
+    } else {
+      this.setState({
+        transformUp: true,
+        transformDown: false,
+
+        authenticationUpLoginMethode: true,
+        AuthenticationMethodWrapperTransitionSpeed: 1,
+        authenticationShowMethodRegister: true,
+        authenticationHideRegisterMethode: true,
+      },() => {
+        var methodeHeights = this.getHightOfMethodWrapper();
+        setTimeout(() => {
+          this.setState({
+            transformUp: false,
+            transformDown: true,
+
+            AuthenticationMethodWrapperTransitionSpeed: 0,
+            authenticationHideRegisterMethode: false,
+            authenticationShowMethodLogin: false,
+            authenticationUpRegisterMethode: true,
+            authenticationMethod: "register"
+
+          },() => {
+            setTimeout(() => {
+              hashHistory.push('/userauthentication/register');
+              this.setState({
+                AuthenticationMethodWrapperTransitionSpeed: 1,
+                authenticationUpLoginMethode: false,
+                authenticationUpRegisterMethode: false,
+              },() => {
+                setTimeout(() => {
+
+                  this.setState({
+                    transformUp: false,
+                    transformDown: false,
+
+                    AuthenticationMethodWrapperTransitionSpeed: 1,
+                    authenticationUpLoginMethode: false,
+                    authenticationUpRegisterMethode: false,
+                  });
+                }, 1000);
+              });
+            }, 10);
+          });
+        }, 1000);
+      }
+    );
+    }
+
+
   },
 
   render() {
+    console.log(this.state.AuthenticationRegisterMethodWrapperHight);
+    var AuthenticationMethodWrapperStyleCommbination = Object.assign(
+      styles.userAuthenticationWrapperStyle,
+      {transition: "margin-top "+ this.state.AuthenticationMethodWrapperTransitionSpeed + "s" },
+      (this.state.authenticationUpLoginMethode)
+        ?
+        {marginTop :(this.state.AuthenticationLoginMethodWrapperHight + 50) * -1 + "px"}
+          :
+        {}
+      ,
+      (this.state.authenticationUpRegisterMethode)
+        ?
+        {marginTop :(this.state.AuthenticationRegisterMethodWrapperHight + 50) * -1 + "px"}
+          :
+        {}
+      ,
+      (this.state.authenticationUpRegisterMethode === false && this.state.authenticationUpLoginMethode === false)
+        ?
+        {marginTop : "0px"}
+          :
+        {}
+    );
+
+    AuthenticationMethodWrapperStyleCommbination = JSON.parse(JSON.stringify(AuthenticationMethodWrapperStyleCommbination));
     return (
       <Paper zDepth={1} style={styles.userAuthenticationSiteStyle}>
-        <div>
-          <Paper zDepth={1} style={styles.userAuthenticationHeadStyle}>
-            <h1 style={styles.userAuthenticationTitleStyle}>{(this.state.authenticationMethod === "register") ? "Register" : "Login"}</h1>
+        <div className="test1234">
+          <Paper zDepth={2} style={styles.userAuthenticationHeadStyle}>
+            <h1 style={styles.userAuthenticationTitleStyle}>{this.state.authenticationMethod}</h1>
             <FloatingActionButton
               secondary={true}
               zDepth={2}
@@ -122,28 +261,46 @@ var UserAuthentication = React.createClass({
             </FloatingActionButton>
           </Paper>
         </div>
-        <div
-          ref="AuthenticationMethodWrapper"
-          style={{
-            overflow: "hidden",
-            "max-height":
-              (this.state.AuthenticationMethodWrapperOpen)
+        <div style={{overflowY: "hidden",}}>
+          <div
+            ref="AuthenticationMethodWrapper"
+            style={AuthenticationMethodWrapperStyleCommbination}
+          >
+            {(this.state.authenticationShowMethodLogin)
                 ?
-                (this.state.AuthenticationMethodWrapperHight != -1)
-                  ?
-                  this.state.AuthenticationMethodWrapperHight + "px"
-                    :
-                  ""
-                :
-                  "0px",
-            transition: "max-height 1s",
-          }}
-        >
-          {(this.state.authenticationMethod === "register") ?
-              <Register />
-            :
-              <Login />
-          }
+                <div
+                  ref="loginMethod"
+                  style={
+                    (this.state.authenticationHideLoginMethode)
+                      ?
+                      styles.userauthenticationHideMethode
+                        :
+                      {}
+                  }
+                >
+                  <Login />
+                </div>
+                  :
+                ""
+            }
+            {(this.state.authenticationShowMethodRegister)
+                ?
+                <div
+                  ref="registerMethod"
+                  style={
+                    (this.state.authenticationHideRegisterMethode)
+                      ?
+                      styles.userauthenticationHideMethode
+                        :
+                      {}
+                  }
+                >
+                  <Register />
+                </div>
+                  :
+                ""
+            }
+          </div>
         </div>
       </Paper>
     );
@@ -160,6 +317,8 @@ const styles = {
   userAuthenticationHeadStyle: {
     backgroundColor: ConfigStore.colors.primaryColor,
     padding: 10,
+    zIndex: "30 !important",
+    position: "relative",
   },
   userAuthenticationTitleStyle: {
     marginBottom: 0,
@@ -179,6 +338,14 @@ const styles = {
     transform: "rotateX(0deg)",
     transition: "transform 1s",
   },
+  userauthenticationHideMethode: {
+    position: "fixed",
+    top: -1000,
+  },
+  userAuthenticationWrapperStyle: {
+    zIndex: "20 !important",
+    position: "relative",
+  }
 };
 
 module.exports = UserAuthentication;
